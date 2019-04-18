@@ -1,0 +1,5 @@
+{
+    "scripts": {
+        "transformer": "node ./trivialities/majorTransformer/majorTransformer.js"
+    }
+}
