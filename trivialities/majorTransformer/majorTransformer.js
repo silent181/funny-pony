@@ -1,44 +1,70 @@
 const path = require('path');
 const fs = require('fs');
+const rules = require('./rules');
+const noteDictionary = require('./noteDictionary');
 
 const filePath = path.resolve(__dirname, './text.txt');
-const buf = fs.readFileSync(filePath);
-const txt = buf.toString();
-const lines = txt.split('\r\n');
-console.log('转调前：', lines);
-const cMajorLines = lines.map(getCMajorLines);
-console.log('转调后：', cMajorLines);
 
-const NOTES = {
-    do: 1,
-    re: 2,
-    mi: 3,
-    fa: 4,
-    so: 5,
-    la: 6,
-    ti: 7
-};
 
-function getCMajorLines(line) {
-    return line ? line.split(' ').map(getCMajor).join(' ') : '';
-}
-
-function getCMajor(note) {
-    // FIXME: 实现
-    return move8Key(note, 1, false)
-}
-
-function sharp(note) {
-    return `#${note}`;
-}
-
-function flat(note) {
-    return `b${note}`;
-}
-
-function move8Key(note, deep = 1, isSharp = true) {
-    while (deep--) {
-        note = isSharp ? `${note}.` : `.${note}`;
+class MajorTransformer {
+    constructor(rules) {
+        this.setRules(rules);
     }
-    return note;
+
+    run(filePath) {
+        this.readFile(filePath);
+        const text = this.getFileText();
+        const lines = text.split('\r\n');
+        console.log('转调前：', lines);
+        const cMajorLines = lines.map(this.getCMajorLines.bind(this));
+        console.log('转调后：', cMajorLines);
+    }
+
+    setRules(rules) {
+        this.rules = rules;
+    }
+
+    getRules() {
+        return this.rules;
+    }
+
+    getRule(mode) {
+        return this.rules[mode];
+    }
+
+    readFile(path) {
+        this.buffer = fs.readFileSync(path);
+    }
+
+    getFileText() {
+        return this.buffer.toString();
+    }
+
+    getCMajorLines(line) {
+        return line ? line.split(' ').map(this.getCMajor).join(' ') : '';
+    }
+
+    getCMajor(note, mode) {
+        // FIXME: 实现
+        console.log(this);
+        const rule = this.getRules().getRule(mode);
+        return move8Key(note, 1, false)
+    }
+
+    sharp(note) {
+        return `#${note}`;
+    }
+    
+    flat(note) {
+        return `b${note}`;
+    }
+    
+    move8Key(note, deep = 1, isSharp = true) {
+        while (deep--) {
+            note = isSharp ? `${note}.` : `.${note}`;
+        }
+        return note;
+    }
 }
+
+new MajorTransformer(rules).run(filePath);
