@@ -5,10 +5,11 @@ const noteDictionary = require('./noteDictionary');
 
 const filePath = path.resolve(__dirname, './text.txt');
 
-
 class MajorTransformer {
     constructor(rules) {
         this.setRules(rules);
+        this.getCMajorLines = this.getCMajorLines.bind(this);
+        this.getCMajor = this.getCMajor.bind(this);
     }
 
     run(filePath) {
@@ -16,7 +17,7 @@ class MajorTransformer {
         const text = this.getFileText();
         const lines = text.split('\r\n');
         console.log('转调前：', lines);
-        const cMajorLines = lines.map(this.getCMajorLines.bind(this));
+        const cMajorLines = lines.map(this.getCMajorLines);
         console.log('转调后：', cMajorLines);
     }
 
