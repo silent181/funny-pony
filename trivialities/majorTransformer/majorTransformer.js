@@ -2,12 +2,12 @@ const path = require('path');
 const fs = require('fs');
 const rules = require('./rules');
 const noteDictionary = require('./noteDictionary');
-
-const filePath = path.resolve(__dirname, './text.txt');
+const getNumber = require('./getNumber');
 
 class MajorTransformer {
-    constructor(rules) {
+    constructor(rules, mode) {
         this.setRules(rules);
+        this.setMode(mode);
         this.getCMajorLines = this.getCMajorLines.bind(this);
         this.getCMajor = this.getCMajor.bind(this);
     }
@@ -29,8 +29,20 @@ class MajorTransformer {
         return this.rules;
     }
 
-    getRule(mode) {
-        return this.rules[mode];
+    setMode(mode) {
+        this.mode = mode;
+    }
+
+    getMode() {
+        return this.mode;
+    }
+
+    getRule() {
+        const {
+            rules,
+            mode
+        } = this;
+        return rules[mode];
     }
 
     readFile(path) {
@@ -45,11 +57,18 @@ class MajorTransformer {
         return line ? line.split(' ').map(this.getCMajor).join(' ') : '';
     }
 
-    getCMajor(note, mode) {
+    getCMajor(note) {
         // FIXME: 实现
-        console.log(this);
-        const rule = this.getRules().getRule(mode);
-        return move8Key(note, 1, false)
+        const {
+            dist,
+            notesToChange
+        } = this.getRule();
+        const mode = this.getMode();
+        const noteNumber = getNumber(note);
+        for (const k in notesToChange) {
+            
+        }
+        return this.move8Key(note, 1, false)
     }
 
     sharp(note) {
@@ -68,4 +87,5 @@ class MajorTransformer {
     }
 }
 
-new MajorTransformer(rules).run(filePath);
+const filePath = path.resolve(__dirname, './text.txt');
+new MajorTransformer(rules, 'A').run(filePath);

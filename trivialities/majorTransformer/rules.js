@@ -1,43 +1,53 @@
 /**
- * 只维护了5个升号与5个降号的大调
+ * 第一版只实现白键上的6个大调
  */
 const rules = {
     D: {
-        fa: 'sharp',
-        do: 'sharp'
+        dist: 1,
+        notesToChange: {
+            fa: 'sharp',
+            do: 'sharp'
+        }
     },
     E: {
-        fa: 'sharp',
-        do: 'sharp',
-        so: 'sharp',
-        re: 'sharp'
+        dist: 2,
+        notesToChange: {
+            fa: 'sharp',
+            do: 'sharp',
+            so: 'sharp',
+            re: 'sharp'
+        }
     },
     F: {
-        ti: 'flat'
+        dist: 3,
+        notesToChange: {
+            ti: 'flat'
+        }
     },
     G: {
-        fa: 'sharp'
+        dist: 4,
+        notesToChange: {
+            fa: 'sharp'
+        }
     },
     A: {
-        fa: 'sharp',
-        do: 'sharp',
-        so: 'sharp'
+        dist: 5,
+        notesToChange: {
+            fa: 'sharp',
+            do: 'sharp',
+            so: 'sharp'
+        }
     },
     B: {
-        fa: 'sharp',
-        do: 'sharp',
-        so: 'sharp',
-        re: 'sharp',
-        la: 'sharp'
-    },
-    Dflat: {
-        ti: 'flat',
-        mi: 'flat',
-        la: 'flat',
-        re: 'flat',
-        so: 'flat'
+        dist: 6,
+        notesToChange: {
+            fa: 'sharp',
+            do: 'sharp',
+            so: 'sharp',
+            re: 'sharp',
+            la: 'sharp'
+        }
     }
-
 }
 
 module.exports = rules;
