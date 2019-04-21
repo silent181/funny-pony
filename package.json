@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "transformer": "node ./trivialities/MajorTransformer/MajorTransformer.js",
+        "transformer": "node ./trivialities/MajorTransformer",
         "commitAll": "git add . && git cz",
         "commit": "git cz"
     }
