@@ -1,6 +1,11 @@
 {
     "scripts": {
-        "transformer": "node ./trivialities/MajorTransformer",
+        "D": "node ./trivialities/MajorTransformer D",
+        "E": "node ./trivialities/MajorTransformer E",
+        "F": "node ./trivialities/MajorTransformer F",
+        "G": "node ./trivialities/MajorTransformer G",
+        "A": "node ./trivialities/MajorTransformer A",
+        "B": "node ./trivialities/MajorTransformer B",
         "commitAll": "git add . && git cz",
         "commit": "git cz"
     }
