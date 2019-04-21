@@ -18,7 +18,7 @@ class MajorTransformer {
 
     bind() {
         this.getCMajorLines = this.getCMajorLines.bind(this);
-        this.getCMajor = this.getCMajor.bind(this);
+        this.getCMajorNote = this.getCMajorNote.bind(this);
     }
 
     setRules(rules) {
@@ -52,12 +52,12 @@ class MajorTransformer {
     }
 
     getCMajorLines(line) {
-        return line ? line.split(' ').map(this.getCMajor).join(' ') : '';
+        return line ? line.split(' ').map(this.getCMajorNote).join(' ') : '';
     }
 
-    getCMajor(noteStr) {
+    getCMajorNote(note) {
         const rule = this.getRule();
-        const cNote = sharp(noteStr, rule);
+        const cNote = sharp(note, rule);
         return cNote;
     }
 
