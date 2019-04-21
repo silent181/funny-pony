@@ -1,7 +1,9 @@
 const path = require('path');
 const fs = require('fs');
+
 const rules = require('./rules');
 const noteUtil = require('./noteUtil');
+const platformUtil = require('./platformUtil');
 
 class MajorTransformer {
     constructor(rules, mode) {
@@ -54,50 +56,36 @@ class MajorTransformer {
     }
 
     getCMajor(note) {
+        // FIXME: 实现
+        let res = '';
         const {
             dist,
             action,
             notesWillChange
         } = this.getRule();
         const noteNumber = noteUtil.getNumber(note);
-        return this.transformToCMajor(noteNumber, dist, action, notesWillChange);
-    }
-
-    transformToCMajor(noteNumber, dist, action, notesWillChange) {
-        // FIXME: 实现
         const currentNote = noteUtil.getNoteByNoteNumber(noteNumber);
-        const str = `currentNum: ${noteNumber}; currentNote: ${currentNote}`;
-        console.log(str);
-        if (notesWillChange.includes(currentNote)) {
-            console.log('包含');
-        } else {
-            console.log('不包含');
-        }
-        return '';
-    }
 
-    sharp(note) {
-        return `#${note}`;
-    }
-    
-    flat(note) {
-        return `b${note}`;
-    }
-    
-    move8Key(note, deep = 1, isSharp = true) {
-        while (deep--) {
-            note = isSharp ? `${note}.` : `.${note}`;
-        }
-        return note;
+        // if (notesWillChange.includes(currentNote)) {
+        //     console.log('包含');
+        // } else {
+        //     return
+        // }
+
+        return res
     }
 
     run(filePath) {
         this.readFile(filePath);
         const text = this.getFileText();
-        const lines = text.split('\r\n');
-        console.log('转调前：', lines);
+        const lines = platformUtil.getLines(text);
+        console.log('转调前, ：', lines);
+        console.log('数组长度：', lines.length);
         const cMajorLines = lines.map(this.getCMajorLines);
         console.log('转调后：', cMajorLines);
+        console.log('转换后数组长度：', cMajorLines.length);
+        const result = platformUtil.getResultText(cMajorLines);
+        console.log('结果：', result);
     }
 }
 

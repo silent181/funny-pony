@@ -8,6 +8,9 @@ const dictionary = {
     ti: 7
 }
 
+/**
+ * 根据字典中的value获取key
+ */
 function getNoteByNoteNumber(number) {
     for (const k in dictionary) {
         const v = dictionary[k];
@@ -27,8 +30,26 @@ function getNumber(str) {
     return +str.match(/\d/)[0];
 }
 
+function sharp(note) {
+    return `#${note}`;
+}
+
+function flat(note) {
+    return `b${note}`;
+}
+
+function move8Key(note, deep = 1, isSharp = true) {
+    while (deep--) {
+        note = isSharp ? `${note}.` : `.${note}`;
+    }
+    return note;
+}
+
 module.exports = {
     dictionary,
     getNoteByNoteNumber,
-    getNumber
+    getNumber,
+    sharp,
+    flat,
+    move8Key
 };
