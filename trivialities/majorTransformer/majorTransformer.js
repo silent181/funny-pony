@@ -3,6 +3,7 @@ const path = require('path');
 
 const sharp = require('./sharp');
 const platformUtil = require('./platformUtil');
+const defaultOutputPath = path.resolve(__dirname, 'C大调结果.txt');
 
 class MajorTransformer {
     constructor(rules, mode) {
@@ -60,7 +61,7 @@ class MajorTransformer {
         return cNote;
     }
 
-    run(filePath, ouputPath = path.resolve(__dirname, 'C大调结果.txt')) {
+    run(filePath, ouputPath = defaultOutputPath) {
         this.readFile(filePath);
         const text = this.getFileText();
         const lines = platformUtil.getLines(text);
