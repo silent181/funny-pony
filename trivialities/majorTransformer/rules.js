@@ -4,49 +4,33 @@
 const rules = {
     D: {
         dist: 1,
-        notesToChange: {
-            fa: 'sharp',
-            do: 'sharp'
-        }
+        action: 'shaprp',
+        notesWillChange: ['fa', 'do']
     },
     E: {
         dist: 2,
-        notesToChange: {
-            fa: 'sharp',
-            do: 'sharp',
-            so: 'sharp',
-            re: 'sharp'
-        }
+        action: 'sharp',
+        notesWillChange: ['fa', 'do', 'so', 'la']
     },
     F: {
         dist: 3,
-        notesToChange: {
-            ti: 'flat'
-        }
+        action: 'flat',
+        notesWillChange: ['ti']
     },
     G: {
         dist: 4,
-        notesToChange: {
-            fa: 'sharp'
-        }
+        action: 'sharp',
+        notesWillChange: ['fa']
     },
     A: {
         dist: 5,
-        notesToChange: {
-            fa: 'sharp',
-            do: 'sharp',
-            so: 'sharp'
-        }
+        action: 'sharp',
+        notesWillChange: ['fa', 'do', 'so']
     },
     B: {
         dist: 6,
-        notesToChange: {
-            fa: 'sharp',
-            do: 'sharp',
-            so: 'sharp',
-            re: 'sharp',
-            la: 'sharp'
-        }
+        action: 'sharp',
+        notesWillChange: ['fa', 'do', 'so', 're', 'la']
     }
 }
 

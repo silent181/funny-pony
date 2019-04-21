@@ -1,24 +1,22 @@
 const path = require('path');
 const fs = require('fs');
 const rules = require('./rules');
-const noteDictionary = require('./noteDictionary');
-const getNumber = require('./getNumber');
+const noteUtil = require('./noteUtil');
 
 class MajorTransformer {
     constructor(rules, mode) {
-        this.setRules(rules);
-        this.setMode(mode);
-        this.getCMajorLines = this.getCMajorLines.bind(this);
-        this.getCMajor = this.getCMajor.bind(this);
+        this.init(rules, mode);
+        this.bind();
     }
 
-    run(filePath) {
-        this.readFile(filePath);
-        const text = this.getFileText();
-        const lines = text.split('\r\n');
-        console.log('转调前：', lines);
-        const cMajorLines = lines.map(this.getCMajorLines);
-        console.log('转调后：', cMajorLines);
+    init(rules, mode) {
+        this.setRules(rules);
+        this.setMode(mode);
+    }
+
+    bind() {
+        this.getCMajorLines = this.getCMajorLines.bind(this);
+        this.getCMajor = this.getCMajor.bind(this);
     }
 
     setRules(rules) {
@@ -38,10 +36,8 @@ class MajorTransformer {
     }
 
     getRule() {
-        const {
-            rules,
-            mode
-        } = this;
+        const rules = this.getRules();
+        const mode = this.getMode();
         return rules[mode];
     }
 
@@ -58,17 +54,26 @@ class MajorTransformer {
     }
 
     getCMajor(note) {
-        // FIXME: 实现
         const {
             dist,
-            notesToChange
+            action,
+            notesWillChange
         } = this.getRule();
-        const mode = this.getMode();
-        const noteNumber = getNumber(note);
-        for (const k in notesToChange) {
-            
+        const noteNumber = noteUtil.getNumber(note);
+        return this.transformToCMajor(noteNumber, dist, action, notesWillChange);
+    }
+
+    transformToCMajor(noteNumber, dist, action, notesWillChange) {
+        // FIXME: 实现
+        const currentNote = noteUtil.getNoteByNoteNumber(noteNumber);
+        const str = `currentNum: ${noteNumber}; currentNote: ${currentNote}`;
+        console.log(str);
+        if (notesWillChange.includes(currentNote)) {
+            console.log('包含');
+        } else {
+            console.log('不包含');
         }
-        return this.move8Key(note, 1, false)
+        return '';
     }
 
     sharp(note) {
@@ -84,6 +89,15 @@ class MajorTransformer {
             note = isSharp ? `${note}.` : `.${note}`;
         }
         return note;
+    }
+
+    run(filePath) {
+        this.readFile(filePath);
+        const text = this.getFileText();
+        const lines = text.split('\r\n');
+        console.log('转调前：', lines);
+        const cMajorLines = lines.map(this.getCMajorLines);
+        console.log('转调后：', cMajorLines);
     }
 }
 
