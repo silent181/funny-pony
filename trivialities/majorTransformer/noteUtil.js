@@ -20,7 +20,7 @@ function getNoteByNoteNumber(number) {
  */
 function getOriginalNoteInfo(str) {
     if (!str) {
-        return;
+        throw new Error('note must be a string which contains one number');
     }
     return str.split(/(\d)/);
 }
