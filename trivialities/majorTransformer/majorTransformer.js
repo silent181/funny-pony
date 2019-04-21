@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 
 const rules = require('./rules');
-const noteUtil = require('./noteUtil');
+const sharp = require('./sharp');
 const platformUtil = require('./platformUtil');
 
 class MajorTransformer {
@@ -55,37 +55,23 @@ class MajorTransformer {
         return line ? line.split(' ').map(this.getCMajor).join(' ') : '';
     }
 
-    getCMajor(note) {
-        // FIXME: 实现
-        let res = '';
-        const {
-            dist,
-            action,
-            notesWillChange
-        } = this.getRule();
-        const noteNumber = noteUtil.getNumber(note);
-        const currentNote = noteUtil.getNoteByNoteNumber(noteNumber);
-
-        // if (notesWillChange.includes(currentNote)) {
-        //     console.log('包含');
-        // } else {
-        //     return
-        // }
-
-        return res
+    getCMajor(noteStr) {
+        const rule = this.getRule();
+        const cNote = sharp(noteStr, rule);
+        return cNote;
     }
 
     run(filePath) {
         this.readFile(filePath);
         const text = this.getFileText();
         const lines = platformUtil.getLines(text);
-        console.log('转调前, ：', lines);
-        console.log('数组长度：', lines.length);
+        // console.log('转调前, ：', lines);
+        // console.log('数组长度：', lines.length);
         const cMajorLines = lines.map(this.getCMajorLines);
-        console.log('转调后：', cMajorLines);
-        console.log('转换后数组长度：', cMajorLines.length);
+        // console.log('转调后：', cMajorLines);
+        // console.log('转换后数组长度：', cMajorLines.length);
         const result = platformUtil.getResultText(cMajorLines);
-        console.log('结果：', result);
+        // console.log('结果：', result);
     }
 }
 

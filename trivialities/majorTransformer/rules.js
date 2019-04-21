@@ -4,7 +4,7 @@
 const rules = {
     D: {
         dist: 1,
-        action: 'shaprp',
+        action: 'sharp',
         notesWillChange: ['fa', 'do']
     },
     E: {

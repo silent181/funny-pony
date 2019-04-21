@@ -1,19 +1,11 @@
-const dictionary = {
-    do: 1,
-    re: 2,
-    mi: 3,
-    fa: 4,
-    so: 5,
-    la: 6,
-    ti: 7
-}
+const DICTIONARY = require('./DICTIONARY');
 
 /**
  * 根据字典中的value获取key
  */
 function getNoteByNoteNumber(number) {
-    for (const k in dictionary) {
-        const v = dictionary[k];
+    for (const k in DICTIONARY) {
+        const v = DICTIONARY[k];
         if (number == v) {
             return k;
         }
@@ -21,35 +13,40 @@ function getNoteByNoteNumber(number) {
 }
 
 /**
- * 只获取一串字符串中的一个数字（假设这串字符串中只含有一个数字）
+ * 获取原始谱中的音高，与升（降）多少个8度
+ * 假设原始谱中都是"5", ".6", "7.."这种标记
+ * 暂不支持原始谱中包含了升降号的情况
+ * 返回值(Array): [prefix, noteNum, suffix]
  */
-function getNumber(str) {
+function getOriginalNoteInfo(str) {
     if (!str) {
         return;
     }
-    return +str.match(/\d/)[0];
+    return str.split(/(\d)/);
 }
 
-function sharp(note) {
+function sharpHalfKey(note) {
     return `#${note}`;
 }
 
-function flat(note) {
+function flatHalfKey(note) {
     return `b${note}`;
 }
 
-function move8Key(note, deep = 1, isSharp = true) {
-    while (deep--) {
-        note = isSharp ? `${note}.` : `.${note}`;
+function restore(key, prefix, suffix) {
+    if (prefix) {
+        return `${prefix}${key}`;
     }
-    return note;
+    if (suffix) {
+        return `${key}${suffix}`;
+    }
+    return `${key}`;
 }
 
 module.exports = {
-    dictionary,
     getNoteByNoteNumber,
-    getNumber,
-    sharp,
-    flat,
-    move8Key
+    getOriginalNoteInfo,
+    sharpHalfKey,
+    flatHalfKey,
+    restore
 };
