@@ -4,7 +4,7 @@ const noteUtil = require('./noteUtil');
  * 转C大调核心逻辑实现
  */
 function sharp(noteStr, rule) {
-    console.log('转调前：', noteStr);
+    // console.log('转调前：', noteStr);
     const [
         prefix,
         noteNum,
@@ -26,9 +26,8 @@ function sharp(noteStr, rule) {
         key,
         fixedSuffix
     ] = _move();
-
     let res = noteUtil.restore(key, fixedPrefix, fixedSuffix);
-    console.log('转调后: ', res);
+    // console.log('转调后: ', res);
     return res;
 
     /**
@@ -65,7 +64,30 @@ function sharp(noteStr, rule) {
      * 会执行此函数就表明音高转换时出现了跨音程的情况，需要根据原始的prefix与suffix进行高低音记号修正
      */
     function _getFixedPrefixAndSuffix(prefix, suffix) {
+        let fixedPrefix;
+        let fixedSuffix;
 
+        if (!prefix) {
+            /**
+             * 没有低音几号时，加一个8度的高音记号
+             */
+            fixedPrefix = '';
+            fixedSuffix = `${suffix}.`;
+        } else if (prefix.length > 1) {
+            /**
+             * 低音记号多余1个时，减去一个低音记号
+             */
+            fixedPrefix = prefix.substr(1);
+            fixedSuffix = '';
+        } else {
+            /**
+             * 低音记号个数为1
+             */
+            fixedPrefix = '';
+            fixedSuffix = '';
+        }
+
+        return [fixedPrefix, fixedSuffix];
     }
 }
 
