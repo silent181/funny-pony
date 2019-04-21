@@ -1,7 +1,5 @@
-const path = require('path');
 const fs = require('fs');
 
-const rules = require('./rules');
 const sharp = require('./sharp');
 const platformUtil = require('./platformUtil');
 
@@ -73,5 +71,4 @@ class MajorTransformer {
     }
 }
 
-const filePath = path.resolve(__dirname, './海滩A调.txt');
-new MajorTransformer(rules, 'A').run(filePath);
+module.exports = MajorTransformer;
