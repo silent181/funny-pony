@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 
 const sharp = require('./sharp');
 const platformUtil = require('./platformUtil');
@@ -59,15 +60,14 @@ class MajorTransformer {
         return cNote;
     }
 
-    run(filePath) {
+    run(filePath, ouputPath = path.resolve(__dirname, 'C大调结果.txt')) {
         this.readFile(filePath);
         const text = this.getFileText();
         const lines = platformUtil.getLines(text);
-        console.log('转调前, ：', lines);
         const cMajorLines = lines.map(this.getCMajorLines);
-        console.log('转调后：', cMajorLines);
         const result = platformUtil.getResultText(cMajorLines);
-        console.log('结果：', result);
+        
+        fs.writeFileSync(ouputPath, result);
     }
 }
 
