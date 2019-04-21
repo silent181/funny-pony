@@ -1,8 +1,9 @@
 const noteUtil = require('./noteUtil');
+const DICTIONARY = require('./DICTIONARY');
 /**
  * 一个8度音程中的最大值
  */
-const MAX_SHARPED_KEY = 7;
+const MAX_SHARPED_KEY = DICTIONARY['ti'];
 
 /**
  * 转C大调核心逻辑实现
