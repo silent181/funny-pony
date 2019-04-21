@@ -66,14 +66,12 @@ class MajorTransformer {
         const text = this.getFileText();
         const lines = platformUtil.getLines(text);
         console.log('转调前, ：', lines);
-        console.log('数组长度：', lines.length);
         const cMajorLines = lines.map(this.getCMajorLines);
         console.log('转调后：', cMajorLines);
-        console.log('转换后数组长度：', cMajorLines.length);
         const result = platformUtil.getResultText(cMajorLines);
         console.log('结果：', result);
     }
 }
 
-const filePath = path.resolve(__dirname, './text.txt');
+const filePath = path.resolve(__dirname, './海滩A调.txt');
 new MajorTransformer(rules, 'A').run(filePath);
