@@ -1,10 +1,13 @@
 const noteUtil = require('./noteUtil');
+/**
+ * 一个8度音程中的最大值
+ */
+const MAX_SHARPED_KEY = 7;
 
 /**
  * 转C大调核心逻辑实现
  */
 function sharp(noteStr, rule) {
-    // console.log('转调前：', noteStr);
     const [
         prefix,
         noteNum,
@@ -15,20 +18,10 @@ function sharp(noteStr, rule) {
         action,
         notesWillChange
     } = rule;
-    /**
-     * 一个8度音程中的最大值
-     */
-    const MAX_SHARPED_KEY = 7;
     const noteNumber = +noteNum;
-
-    const [
-        fixedPrefix,
-        key,
-        fixedSuffix
-    ] = _move();
-    let res = noteUtil.restore(key, fixedPrefix, fixedSuffix);
-    // console.log('转调后: ', res);
-    return res;
+    const transformedResult = _move();
+    
+    return noteUtil.reconstruct(...transformedResult);
 
     /**
      * TODO: 返回转调后的最终结果，包含高低音记号，升降号和音高
@@ -57,7 +50,7 @@ function sharp(noteStr, rule) {
             }
         }
 
-        return [fixedPrefix, moved, fixedSuffix];
+        return [moved, fixedPrefix, fixedSuffix];
     }
 
     /**

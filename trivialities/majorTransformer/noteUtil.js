@@ -33,7 +33,10 @@ function flatHalfKey(note) {
     return `b${note}`;
 }
 
-function restore(key, prefix, suffix) {
+/**
+ * 重新构建C大调简谱音符
+ */
+function reconstruct(key, prefix, suffix) {
     if (prefix) {
         return `${prefix}${key}`;
     }
@@ -48,5 +51,5 @@ module.exports = {
     getOriginalNoteInfo,
     sharpHalfKey,
     flatHalfKey,
-    restore
+    reconstruct
 };
