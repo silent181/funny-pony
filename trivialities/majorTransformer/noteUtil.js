@@ -14,15 +14,15 @@ function getNoteByNoteNumber(number) {
 
 /**
  * 获取原始谱中的音高，与升（降）多少个8度
- * 假设原始谱中都是"5", ".6", "7.."这种标记
- * 暂不支持原始谱中包含了升降号的情况
- * 返回值(Array): [prefix, noteNum, suffix]
+ * 假设原始谱中都是"5", ".6", "7..", ".#5"这种标记
+ * v0.0.2 支持原始谱中包含了升降记号的情况 ———— 2019/04/27
+ * 返回值(Array): [prefix, decorator(值为'b','#',''其中之一), note(音高数字，String类型), suffix]
  */
 function getOriginalNoteInfo(str) {
     if (!str) {
         throw new Error('note must be a string which contains one number');
     }
-    return str.split(/(\d)/);
+    return str.split(/([b#]?)(\d)/);
 }
 
 function sharpHalfKey(note) {

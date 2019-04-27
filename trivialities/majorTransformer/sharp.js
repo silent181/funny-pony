@@ -18,7 +18,8 @@ const MAX_SHARPED_KEY = DICTIONARY['ti'];
 function sharp(noteStr, rule) {
     const [
         prefix,
-        noteNum,
+        decorator,
+        note,
         suffix
     ] = getOriginalNoteInfo(noteStr);
     const {
@@ -26,9 +27,8 @@ function sharp(noteStr, rule) {
         action,
         notesWillChange
     } = rule;
-    const noteNumber = +noteNum;
+    const noteNumber = +note;
     const transformedResult = _move();
-    
     return reconstruct(...transformedResult);
 
     /**
@@ -49,12 +49,11 @@ function sharp(noteStr, rule) {
         } else {
             moved = sharpedKey;
         }
-
         if (notesWillChange.includes(getNoteByNoteNumber(moved))) {
             if (action === 'sharp') {
-                moved = sharpHalfKey(moved);
+                moved = sharpHalfKey(moved, decorator);
             } else if (action === 'flat') {
-                moved = flatHalfKey(moved);
+                moved = flatHalfKey(moved, decorator);
             }
         }
 
