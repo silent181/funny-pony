@@ -10,7 +10,7 @@ const rules = {
     E: {
         dist: 2,
         action: 'sharp',
-        notesWillChange: ['fa', 'do', 'so', 'la']
+        notesWillChange: ['fa', 'do', 'so', 're']
     },
     F: {
         dist: 3,
