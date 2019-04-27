@@ -34,6 +34,36 @@ function flatHalfKey(note) {
 }
 
 /**
+ * 会执行此函数就表明音高转换时出现了跨音程的情况，需要根据原始的prefix与suffix进行高低音记号修正
+ */
+function getFixedPrefixAndSuffix(prefix, suffix) {
+    let fixedPrefix;
+    let fixedSuffix;
+
+    if (!prefix) {
+        /**
+         * 没有低音几号时，加一个8度的高音记号
+         */
+        fixedPrefix = '';
+        fixedSuffix = `${suffix}.`;
+    } else if (prefix.length > 1) {
+        /**
+         * 低音记号多余1个时，减去一个低音记号
+         */
+        fixedPrefix = prefix.substr(1);
+        fixedSuffix = '';
+    } else {
+        /**
+         * 低音记号个数为1
+         */
+        fixedPrefix = '';
+        fixedSuffix = '';
+    }
+
+    return [fixedPrefix, fixedSuffix];
+}
+
+/**
  * 重新构建C大调简谱音符
  */
 function reconstruct(key, prefix, suffix) {
@@ -51,5 +81,6 @@ module.exports = {
     getOriginalNoteInfo,
     sharpHalfKey,
     flatHalfKey,
+    getFixedPrefixAndSuffix,
     reconstruct
 };
