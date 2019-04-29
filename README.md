@@ -7,4 +7,4 @@
 - click [here](./trivialities/majorTransformer) to review code
 
 ### ShortMessageLayer
-- click [here](./commponents/shortMessagelayer) to review code
+- click [here](./components/ShortMessagelayer) to review code
