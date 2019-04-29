@@ -4,7 +4,7 @@
 
 ### MajorTransformer
 - A tool to transform any other majors to C major.
-- click [here](./trivialities/MajorTransformer) to review code
+- click [here](./trivialities/majorTransformer) to review code
 
 ### ShortMessageLayer
-- click [here](./commponents/ShortMessagelayer) to review code
+- click [here](./commponents/shortMessagelayer) to review code
