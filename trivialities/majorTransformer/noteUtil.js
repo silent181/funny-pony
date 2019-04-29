@@ -1,4 +1,6 @@
 const DICTIONARY = require('./DICTIONARY');
+const MAX_SHARPED_NOTE = DICTIONARY['ti'];
+const MIN_FLATED_NOTE = DICTIONARY['do'];
 
 /**
  * 根据字典中的value获取key
@@ -25,11 +27,14 @@ function getOriginalNoteInfo(str) {
     return str.split(/([b#]?)(\d)/);
 }
 
-function sharpHalfKey(note) {
+function sharpHalfKey(note, decorator, prefix, suffix) {
+    // FIXME:  增加半音情形
+
     return `#${note}`;
 }
 
 function flatHalfKey(note) {
+    // FIXME: 增加半音情形
     return `b${note}`;
 }
 
