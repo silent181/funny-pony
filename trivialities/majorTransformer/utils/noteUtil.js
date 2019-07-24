@@ -1,7 +1,8 @@
-const DICTIONARY = require('../consts/DICTIONARY');
-const MAX_SHARPED_NOTE = DICTIONARY['ti'];
-const MIN_FLATED_NOTE = DICTIONARY['do'];
-
+const {
+    DICTIONARY,
+    MAX_SHARPED_NOTE,
+    MIN_FLATED_NOTE
+} = require('../consts');
 /**
  * 根据字典中的value获取key
  */
@@ -22,7 +23,7 @@ function getNoteByNoteNumber(number) {
  * v0.0.3 增加输入校验 ————2019/07/24
  */
 function getOriginalNoteInfo(str) {
-    if (!str || !_hasNumber(str) || ) {
+    if (!str || !_hasNumber(str)) {
         throw new Error('note must be a string which contains one number');
     }
     if (_hasInvalidStr(str)) {
@@ -51,36 +52,6 @@ function flatHalfKey(note) {
 }
 
 /**
- * 会执行此函数就表明音高转换时出现了跨音程的情况，需要根据原始的prefix与suffix进行高低音记号修正
- */
-function getFixedPrefixAndSuffix(prefix, suffix) {
-    let fixedPrefix;
-    let fixedSuffix;
-
-    if (!prefix) {
-        /**
-         * 没有低音几号时，加一个8度的高音记号
-         */
-        fixedPrefix = '';
-        fixedSuffix = `${suffix}.`;
-    } else if (prefix.length > 1) {
-        /**
-         * 低音记号多余1个时，减去一个低音记号
-         */
-        fixedPrefix = prefix.substr(1);
-        fixedSuffix = '';
-    } else {
-        /**
-         * 低音记号个数为1
-         */
-        fixedPrefix = '';
-        fixedSuffix = '';
-    }
-
-    return [fixedPrefix, fixedSuffix];
-}
-
-/**
  * 重新构建C大调简谱音符
  */
 function reconstruct(key, prefix, suffix) {
@@ -98,6 +69,5 @@ module.exports = {
     getOriginalNoteInfo,
     sharpHalfKey,
     flatHalfKey,
-    getFixedPrefixAndSuffix,
     reconstruct
 };

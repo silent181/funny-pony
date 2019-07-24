@@ -1,5 +1,5 @@
 const path = require('path');
-const rules = require('./consts/rules');
+const { rules } = require('./consts');
 const MajorTransformer = require('./MajorTransformer');
 
 const filePath = path.resolve(__dirname, './resources/海滩A调.txt');

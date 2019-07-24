@@ -69,6 +69,7 @@ class MajorTransformer {
         const result = platformUtil.getResultText(cMajorLines);
         
         fs.writeFileSync(ouputPath, result);
+        console.log('==============done==============');
     }
 }
 

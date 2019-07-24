@@ -1,32 +1,38 @@
-const DICTIONARY = require('./consts/DICTIONARY');
+const { isNotEmpty } = require('./utils/common');
+const {
+    DICTIONARY,
+    MAX_SHARPED_NOTE,
+    MIN_FLATED_NOTE
+} = require('./consts');
+
 const {
     getOriginalNoteInfo,
     reconstruct,
-    getFixedPrefixAndSuffix,
     getNoteByNoteNumber,
     sharpHalfKey,
     flatHalfKey
 } = require('./utils/noteUtil');
-/**
- * 一个8度音程中的最大值
- */
-const MAX_SHARPED_NOTE = DICTIONARY['ti'];
+
+const {
+    getSharpedPrefixAndSuffix,
+    getFlatedPrefixAndSuffix
+} = require('./utils/prefixAndSuffixUtil');
 
 /**
  * 转C大调核心逻辑实现
  */
-function sharp(noteStr, rule) {
+function sharp(noteStr, {
+    dist,
+    action,
+    notesWillChange
+}) {
     const [
         prefix,
         decorator,
         note,
         suffix
     ] = getOriginalNoteInfo(noteStr);
-    const {
-        dist,
-        action,
-        notesWillChange
-    } = rule;
+    
     const noteNumber = +note;
     const transformedResult = _move();
     return reconstruct(...transformedResult);
@@ -42,15 +48,17 @@ function sharp(noteStr, rule) {
         let finalPrefix;
         let finalSuffix;
         const sharpedNote = noteNumber + dist;
+
         /**
          * step1：get movedNote, fixedPrefix and fixedSuffix by simple dist move
          */
         if (sharpedNote > MAX_SHARPED_NOTE) { // 跨音程
             movedNote = sharpedNote - MAX_SHARPED_NOTE;
-            [fixedPrefix, fixedSuffix] = getFixedPrefixAndSuffix(prefix, suffix);
+            [fixedPrefix, fixedSuffix] = getSharpedPrefixAndSuffix(prefix, suffix);
         } else {
             movedNote = sharpedNote;
         }
+
         /**
          * step2: check if movedNote should sharp or flat and get final note, prefix and suffix
          */
@@ -63,6 +71,11 @@ function sharp(noteStr, rule) {
         } else {
             [finalNote, finalPrefix, finalSuffix] = [movedNote, fixedPrefix, fixedSuffix];
         }
+
+        /**
+         * step3: if original note has decorate
+         */
+
 
         return [finalNote, finalPrefix, finalSuffix];
     }
