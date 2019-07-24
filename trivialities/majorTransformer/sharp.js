@@ -1,4 +1,4 @@
-const DICTIONARY = require('./DICTIONARY');
+const DICTIONARY = require('./consts/DICTIONARY');
 const {
     getOriginalNoteInfo,
     reconstruct,
@@ -6,7 +6,7 @@ const {
     getNoteByNoteNumber,
     sharpHalfKey,
     flatHalfKey
-} = require('./noteUtil');
+} = require('./utils/noteUtil');
 /**
  * 一个8度音程中的最大值
  */

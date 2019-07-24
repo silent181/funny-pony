@@ -8,6 +8,6 @@
         "B": "node ./trivialities/MajorTransformer B",
         "commitAll": "git add . && git cz",
         "commit": "git cz",
-        "test": "node ./trivialities/MajorTransformer/test.js"
+        "test": "node ./trivialities/MajorTransformer/test"
     }
 }

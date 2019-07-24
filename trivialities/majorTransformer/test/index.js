@@ -1,5 +1,5 @@
-const sharp = require('./sharp');
-const rules = require('./rules');
+const sharp = require('../sharp');
+const rules = require('../consts/rules');
 const mode = process.argv[2];
 const rule = rules[mode];
 const testNote = ['#5', '#6', '#7', '#4']

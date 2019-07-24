@@ -1,4 +1,4 @@
-const DICTIONARY = require('./DICTIONARY');
+const DICTIONARY = require('../consts/DICTIONARY');
 const MAX_SHARPED_NOTE = DICTIONARY['ti'];
 const MIN_FLATED_NOTE = DICTIONARY['do'];
 
