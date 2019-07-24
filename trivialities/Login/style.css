@@ -1,0 +1,180 @@
+/* header area */
+
+header {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+}
+
+.logo {
+    width: 120px;
+    height: 25px;
+    margin-left: 20px;
+}
+
+.mock-select {
+    position: relative;
+    right: 20px;
+    font-size: 12px;
+    color: #fff;
+}
+
+.language {
+    font-size: 0;
+    cursor: pointer;
+}
+
+.language span {
+    font-size: 12px;
+}
+
+.triangle {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 5px;
+    margin-bottom: -2px;
+    border-style: solid;
+    border-width: 4px;
+    border-color: #fff transparent transparent;
+    transition: .3s ease-in-out;
+}
+
+.options {
+    position: absolute;
+    right: 0;
+    overflow: hidden;
+    width: 100px;
+    height: 0;
+    margin-top: 10px;
+    transition: height .3s ease-in-out;
+}
+
+.options .option {
+    line-height: 35px;
+    font-size: 12px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    text-align: center;
+    color: #666;
+    background: #fff;
+}
+
+input:checked ~ .options {
+    height: 100px;
+}
+
+input:checked ~ .triangle {
+    margin-bottom: 2px;
+    transform: rotate(180deg);
+}
+
+/* login content */
+
+.container {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: url('./assets/background.jpg');
+    background-size: cover;
+}
+
+.line {
+    margin-top: 30px;
+}
+
+.login-title {
+    margin-top: 50px;
+}
+
+.login-container {
+    box-sizing: border-box;
+    width: 480px;
+    height: 370px;
+    padding: 0 50px;
+    background: #fff;
+}
+
+.mock-input-text {
+    outline: none;
+    border-bottom: 1px solid #eee;
+}
+
+.mock-input-text:empty::before {
+    content: attr(placeholder);
+    color:#bbb;
+}
+
+.login-button {
+    line-height: 40px;
+    border-radius: 4px;
+    text-align: center;
+    color: #fff;
+    background: #6478fa;
+    cursor: pointer;
+}
+
+.login-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.mock-checkbox {
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+    border: 1px solid #6478fa;
+    border-radius: 2px;
+    transition: .3s ease-in-out;
+}
+
+input:checked + .mock-checkbox {
+    background: #6478fa;
+}
+
+input:checked + .mock-checkbox i {
+    position: absolute;
+    width: 2px;
+    height: 5px;
+    margin-top: 4px;
+    margin-left: 2px;
+    background: #fff;
+    transform: rotate(-40deg);
+}
+
+input:checked + .mock-checkbox i::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 7px;
+    margin-left: 4px;
+    background: #fff;
+    transform: rotate(80deg);
+}
+
+.forgot-pwd {
+    font-size: 14px;
+    color: #6478fa;
+    text-decoration: none;
+}
