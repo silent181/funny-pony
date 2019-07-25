@@ -1,0 +1,15 @@
+6 nu .6 .3
+6 nu .6 nu
+6 .3 nu .2
+3 .2 nu .3
+6 .3 .6 nu
+.7 .6 nu nu
+nu nu 6 .3 nu .2
+nu .2 7 6 6
+
+.3 nu nu .6 nu nu nu nu
+nu nu .6 .3 nu nu .3 nu nu
+nu nu .6 .2
+.3 nu .3 nu
+.6 .7 nu .2
+.3 .6 nu .6

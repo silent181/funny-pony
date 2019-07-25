@@ -3,7 +3,7 @@ const path = require('path');
 
 const sharp = require('./sharp');
 const platformUtil = require('./utils/platformUtil');
-const defaultOutputPath = path.resolve(__dirname, './resources/C大调结果.txt');
+const defaultOutputPath = path.resolve(__dirname, './resources/C大调结果测试.txt');
 
 class MajorTransformer {
     constructor(rules, mode) {

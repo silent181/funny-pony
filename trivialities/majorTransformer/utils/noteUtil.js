@@ -40,17 +40,6 @@ function _hasInvalidStr(str) {
     return /[^\db#\.]/.test(str);
 }
 
-function sharpHalfKey(note, decorator, prefix, suffix) {
-    // FIXME:  增加半音情形
-
-    return `#${note}`;
-}
-
-function flatHalfKey(note) {
-    // FIXME: 增加半音情形
-    return `b${note}`;
-}
-
 /**
  * 重新构建C大调简谱音符
  */
@@ -67,7 +56,5 @@ function reconstruct(key, prefix, suffix) {
 module.exports = {
     getNoteByNoteNumber,
     getOriginalNoteInfo,
-    sharpHalfKey,
-    flatHalfKey,
     reconstruct
 };

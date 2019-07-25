@@ -1,4 +1,7 @@
-const { isNotEmpty } = require('./utils/common');
+const {
+    isNotEmpty,
+    setState
+} = require('./utils/common');
 const {
     DICTIONARY,
     MAX_SHARPED_NOTE,
@@ -8,9 +11,7 @@ const {
 const {
     getOriginalNoteInfo,
     reconstruct,
-    getNoteByNoteNumber,
-    sharpHalfKey,
-    flatHalfKey
+    getNoteByNoteNumber
 } = require('./utils/noteUtil');
 
 const {
@@ -32,53 +33,84 @@ function sharp(noteStr, {
         note,
         suffix
     ] = getOriginalNoteInfo(noteStr);
-    
+
     const noteNumber = +note;
     const transformedResult = _move();
     return reconstruct(...transformedResult);
 
     /**
      * TODO: 返回转调后的最终结果，包含高低音记号，升降号和音高
+     * 过程略复杂，先用POP编程实现功能
      */
     function _move() {
-        let movedNote;
-        let fixedPrefix = prefix;
-        let fixedSuffix = suffix;
-        let finalNote;
-        let finalPrefix;
-        let finalSuffix;
         const sharpedNote = noteNumber + dist;
+        let result = {
+            decorator,
+            prefix,
+            suffix,
+            note: sharpedNote
+        };
 
         /**
          * step1：get movedNote, fixedPrefix and fixedSuffix by simple dist move
          */
-        if (sharpedNote > MAX_SHARPED_NOTE) { // 跨音程
-            movedNote = sharpedNote - MAX_SHARPED_NOTE;
-            [fixedPrefix, fixedSuffix] = getSharpedPrefixAndSuffix(prefix, suffix);
-        } else {
-            movedNote = sharpedNote;
+        if (sharpedNote > MAX_SHARPED_NOTE) {
+            const [sharpedPrefix, sharpedSuffix] = getSharpedPrefixAndSuffix(prefix, suffix);
+            setState(result, {
+                note: sharpedNote - MAX_SHARPED_NOTE,
+                prefix: sharpedPrefix,
+                suffix: sharpedSuffix
+            });
         }
 
         /**
-         * step2: check if movedNote should sharp or flat and get final note, prefix and suffix
+         * step2: check if movedNote should sharp or flat to get final note, decorator, prefix and suffix
          */
-        if (notesWillChange.includes(getNoteByNoteNumber(movedNote))) {
+        if (notesWillChange.includes(getNoteByNoteNumber(result.note))) {
             if (action === 'sharp') {
-                [finalNote, finalPrefix, finalSuffix] = sharpHalfKey(movedNote, decorator, fixedPrefix, fixedSuffix);
+                result = sharpHalfKey(result);
             } else if (action === 'flat') {
-                [finalNote, finalPrefix, finalSuffix] = flatHalfKey(movedNote, decorator, fixedPrefix, fixedSuffix);
+                result = flatHalfKey(result);
             }
         } else {
-            [finalNote, finalPrefix, finalSuffix] = [movedNote, fixedPrefix, fixedSuffix];
+            const args = {
+                prefix: result.prefix,
+                decorator: '',
+                note: result.note,
+                suffix: result.suffix
+            };
+            if (decorator === '#') {
+                result = sharpHalfKey(args);
+            } else if (decorator === 'b') {
+                result = flatHalfKey(args);
+            }
         }
 
-        /**
-         * step3: if original note has decorate
-         */
-
-
-        return [finalNote, finalPrefix, finalSuffix];
+        return `${result.prefix}${result.decorator}${result.note}${result.suffix}`
     }
+}
+
+function sharpHalfKey({
+    note,
+    decorator,
+    prefix,
+    suffix
+}) {
+    // FIXME:  增加半音情形
+    if (note === MAX_SHARPED_NOTE) {
+        const [sharpedPrefix, sharpedSuffix] = getSharpedPrefixAndSuffix(prefix, suffix);
+    }
+    return `#${note}`;
+}
+
+function flatHalfKey({
+    note,
+    decorator,
+    prefix,
+    suffix
+}) {
+    // FIXME: 增加半音情形
+    return `b${note}`;
 }
 
 module.exports = sharp;
