@@ -1,7 +1,4 @@
-const {
-    isNotEmpty,
-    setState
-} = require('./utils/common');
+const { setState } = require('./utils/common');
 const {
     MAX_SHARPED_NOTE,
     MIN_FLATED_NOTE,
