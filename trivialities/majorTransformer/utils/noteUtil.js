@@ -1,8 +1,4 @@
-const {
-    DICTIONARY,
-    MAX_SHARPED_NOTE,
-    MIN_FLATED_NOTE
-} = require('../consts');
+const { DICTIONARY } = require('../consts');
 /**
  * 根据字典中的value获取key
  */
@@ -40,21 +36,7 @@ function _hasInvalidStr(str) {
     return /[^\db#\.]/.test(str);
 }
 
-/**
- * 重新构建C大调简谱音符
- */
-function reconstruct(key, prefix, suffix) {
-    if (prefix) {
-        return `${prefix}${key}`;
-    }
-    if (suffix) {
-        return `${key}${suffix}`;
-    }
-    return `${key}`;
-}
-
 module.exports = {
     getNoteByNoteNumber,
-    getOriginalNoteInfo,
-    reconstruct
+    getOriginalNoteInfo
 };
