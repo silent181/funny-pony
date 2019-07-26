@@ -6,9 +6,8 @@
         "G": "node ./trivialities/MajorTransformer G",
         "A": "node ./trivialities/MajorTransformer A",
         "B": "node ./trivialities/MajorTransformer B",
-        "commitAll": "git add . && git cz",
-        "postcommitAll": "git push",
-        "commit": "git cz",
-        "test": "node ./trivialities/MajorTransformer/test"
+        "commit": "git add . && git cz",
+        "postcommit": "git push",
+        "test": "node ./trivialities/MajorTransformer/test E"
     }
 }
