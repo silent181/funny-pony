@@ -36,7 +36,7 @@ function sharp(noteStr, {
     ] = getOriginalNoteInfo(noteStr);
     const noteNumber = +note;
     const sharpedNote = noteNumber + dist;
-    const result = {
+    let result = {
         decorator,
         prefix,
         suffix,
@@ -60,10 +60,9 @@ function sharp(noteStr, {
      */
     if (notesWillChange.includes(getNoteByNoteNumber(result.note))) {
         if (action === ACTIONS.sharp) {
-            setState(result, sharpHalfKey(result));
-
+            result = sharpHalfKey(result);
         } else if (action === ACTIONS.flat) {
-            setState(result, flatHalfKey(result));
+            result = flatHalfKey(result);
         }
     } else {
         const args = {
@@ -73,78 +72,104 @@ function sharp(noteStr, {
             suffix: result.suffix
         };
         if (decorator === DECORATORS.sharp) {
-            setState(result, sharpHalfKey(args));
+            result = sharpHalfKey(args);
         } else if (decorator === DECORATORS.flat) {
-            setState(result, flatHalfKey(args));
+            result = flatHalfKey(args);
         }
     }
 
     return `${result.prefix}${result.decorator}${result.note}${result.suffix}`
 }
 
-function sharpHalfKey(noteInfos) {
-    return moveHalfKey(noteInfos);
-}
-
-function flatHalfKey(noteInfos) {
-    return moveHalfKey(noteInfos, false);
-}
-
-function moveHalfKey({
+function sharpHalfKey({
     note,
     decorator,
     prefix,
     suffix
-}, isSharp = true) {
-    const result = {
+}) {
+    let result = {
         note,
         decorator,
         prefix,
         suffix
     };
 
-    if (
-        (isSharp && decorator === DECORATORS.flat) ||
-        (!isSharp && decorator === DECORATORS.sharp)
-    ) {
+    if (decorator === DECORATORS.flat) {
         setState(result, {
             decorator: DECORATORS.none
         });
     } else {
-        if ((isSharp && note === MAX_SHARPED_NOTE) || 
-            (!isSharp && note === MIN_FLATED_NOTE)
-        ) {
-            const [fixedPrefix, fixedSuffix] = isSharp ? 
-                getSharpedPrefixAndSuffix(prefix, suffix) :
-                getFlatedPrefixAndSuffix(prefix, suffix);
+        if (note === MAX_SHARPED_NOTE) {
+            const [sharpedPrefix, sharpedSuffix] = getSharpedPrefixAndSuffix(prefix, suffix);
             setState(result, {
-                note: isSharp ? MIN_FLATED_NOTE : MAX_SHARPED_NOTE,
-                prefix: fixedPrefix,
-                suffix: fixedSuffix
+                note: MIN_FLATED_NOTE,
+                prefix: sharpedPrefix,
+                suffix: sharpedSuffix
             });
-        } else if ((isSharp && note === LOW_HALF_INTERVAL_NOTE) ||
-            (!isSharp && note === HIGH_HALF_INTERVAL_NOTE)
-        ) {
+        } else if (note === LOW_HALF_INTERVAL_NOTE) {
             setState(result, {
-                note: isSharp ? HIGH_HALF_INTERVAL_NOTE : LOW_HALF_INTERVAL_NOTE
+                note: HIGH_HALF_INTERVAL_NOTE
             });
         } else {
-            if (
-                (isSharp && decorator === DECORATORS.sharp) ||
-                (!isSharp && decorator === DECORATORS.flat)
-            ) {
+            if (decorator === DECORATORS.sharp) {
                 setState(result, {
-                    note: isSharp ? note + 1 : note - 1,
+                    note: note + 1,
                     decorator: DECORATORS.none
                 });
             } else {
                 setState(result, {
-                    decorator: isSharp ? DECORATORS.sharp : DECORATORS.flat
+                    decorator: DECORATORS.sharp
                 });
             }
         }
     }
 
+    return result;
+}
+
+function flatHalfKey({
+    note,
+    decorator,
+    prefix,
+    suffix
+}) {
+    let result = {
+        note,
+        decorator,
+        prefix,
+        suffix
+    };
+
+    if (decorator === DECORATORS.sharp) {
+        setState(result, {
+            decorator: DECORATORS.none
+        });
+    } else {
+        if (note === MIN_FLATED_NOTE) {
+            const [flatedPrefix, flatedSuffix] = getFlatedPrefixAndSuffix(prefix, suffix);
+            setState(result, {
+                note: MAX_SHARPED_NOTE,
+                prefix: flatedPrefix,
+                suffix: flatedSuffix
+            });
+        } else if (note === HIGH_HALF_INTERVAL_NOTE) {
+            setState(result, {
+                note: LOW_HALF_INTERVAL_NOTE
+            });
+        } else {
+            if (decorator === DECORATORS.flat) {
+                setState(result, {
+                    note: note - 1,
+                    decorator: DECORATORS.none
+                });
+            } else {
+                setState(result, {
+                    decorator: DECORATORS.flat
+                });
+            }
+        }
+    }
+    
     return result;
 }
 
