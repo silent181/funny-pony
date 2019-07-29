@@ -1,4 +1,4 @@
-const { DICTIONARY } = require('../consts');
+const { DICTIONARY } = require('../../consts');
 /**
  * 根据字典中的value获取key
  */

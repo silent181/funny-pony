@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 
-const sharp = require('../sharp');
-const { rules } = require('../consts');
+const sharp = require('./sharp');
+const { rules } = require('./consts');
 
 const testNote = ['#5', '#6', '#7', '#4', '6']
 const expected = ['1.', '2.', '3.', '#6', '#1.'] // 以E大调为例，因为E大调升号较多

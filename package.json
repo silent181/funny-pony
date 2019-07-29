@@ -8,7 +8,7 @@
         "B": "node ./trivialities/MajorTransformer B",
         "commit": "git add . && git cz",
         "postcommit": "git push",
-        "test": "mocha ./trivialities/MajorTransformer/test"
+        "test": "mocha ./trivialities/MajorTransformer/sharp.test.js"
     },
     "devDependencies": {
         "chai": "^4.2.0"
