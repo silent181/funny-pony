@@ -8,7 +8,9 @@
         "B": "node ./trivialities/MajorTransformer B",
         "commit": "git add . && git cz",
         "postcommit": "git push",
-        "test": "npm run testSharp & npm run testUtil",
+        "partialCommit": "git cz",
+        "postpartialCommit": "git push",
+        "test": "npm run testSharp && npm run testUtil",
         "testSharp": "mocha ./trivialities/MajorTransformer/sharp.test.js",
         "testUtil": "mocha ./trivialities/MajorTransformer/utils"
     },
