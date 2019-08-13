@@ -7,11 +7,11 @@ function debounce(fn, delay, leading = false) {
             clearTimeout(timer);
         }
         if (leading && firstTrigger) {
-            fn.apply(context, this);
+            fn.apply(context, arguments);
             firstTrigger = false;
         }
         timer = setTimeout(() => {
-            fn.apply(context, this);
+            fn.apply(context, arguments);
             timer = null;
             firstTrigger = true;
         }, delay)
