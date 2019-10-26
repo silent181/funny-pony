@@ -1,4 +1,4 @@
 module.exports = {
-    entry: '天空之城D.txt',
-    output: '天空C大调结果.txt'
+    entry: '友谊地久天长F.txt',
+    output: '友谊地久天长C结果.txt'
 };
