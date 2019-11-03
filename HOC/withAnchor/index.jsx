@@ -28,12 +28,10 @@ const withAnchor = ({
 
         bindScrollEvents = () => {
             this.handleScroll = throttle(() => {
-                const positionList = this.tabContent.map(item => {
-                    return {
-                        top: item.getBoundingClientRect().top,
-                        height: item.getBoundingClientRect().height
-                    }
-                });
+                const positionList = this.tabContent.map(item => ({
+                    top: item.getBoundingClientRect().top,
+                    height: item.getBoundingClientRect().height
+                }));
                 const currentTabIndex = this.getCurrentIndex(positionList);
                 if (!(currentTabIndex >= 0)) {
                     return;
