@@ -67,7 +67,7 @@ const withAnchor = ({
         }
 
         render() {
-            const { tabContentRef, onTabClick, ...passThroughProps } = this.props;
+            const passThroughProps = this.props;
 
             return <WrappedComponent
                 selectedTabIndex={this.state.selectedTabIndex}
