@@ -30,7 +30,3 @@ var addStrings = function (num1, num2) {
 
     return res.reverse().join('');
 };
-
-// var s1 = '1'
-// var s2 = '1'
-// addStrings(s1, s2)
