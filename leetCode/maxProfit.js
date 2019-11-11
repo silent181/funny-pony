@@ -4,16 +4,24 @@
  */
 var maxProfit = function (prices) {
     var max = 0;
-    for (var i = 0; i < prices.length - 1; i++) {
-        var cur = prices[i];
+    var cost = prices[0];
 
-        for (var j = i + 1; j < prices.length; j++) {
-            var next = prices[j];
-            var profit = next - cur;
-            if (profit > max) {
-                max = profit;
-            }
+    for (var i = 1; i < prices.length; i++) {
+        var cur = prices[i];
+        var profit = cur - cost;
+
+        if (profit < 0) {
+            cost = cur;
+            continue;
         }
+
+        if (profit > max) {
+            max = profit;
+        }
+
     }
+
     return max;
 };
+
+var t = [7, 1, 5, 3, 6, 2, 4];
