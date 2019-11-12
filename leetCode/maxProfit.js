@@ -23,5 +23,3 @@ var maxProfit = function (prices) {
 
     return max;
 };
-
-var t = [7, 1, 5, 3, 6, 2, 4];
