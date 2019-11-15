@@ -11,15 +11,34 @@
  * @return {number}
  */
 var searchInsert = function(nums, target) {
+    var len = nums.length;
+    var l = 0;
+    var r = len - 1;
+    var m = Math.floor(len / 2);
 
+    if (target <= nums[l]) {
+        return 0;
+    }
 
-    for (var i = 0; i < nums.length; i++) {
-        var cur = nums[i];
-        if (target <= cur) {
-            return i;
+    if (target > nums[r]) {
+        return len;
+    }
+
+    while (r - l > 1) {
+        var mid = nums[m];
+        if (mid === target) {
+            return m;
+        } else {
+            if (mid < target) {
+                l = m;
+                m += Math.floor((r - m) / 2);
+            } else {
+                r = m;
+                m -= Math.floor((m - l) / 2 );
+            }
         }
     }
-    return nums.length;
+    return r;
 };
 // @lc code=end
 
