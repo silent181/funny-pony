@@ -10,7 +10,7 @@
  * @return {TreeNode}
  */
 // 方法一：递归
-var invertTree = function(root) {
+var invertTree1= function(root) {
     if (root == null) {
         return null;
     }
@@ -21,50 +21,102 @@ var invertTree = function(root) {
     return root;
 };
 
-// 方法二：循环迭代，深度优先（前序遍历）
-var invertTree1 = function(root) {
+// 方法二：循环迭代，深度优先（先序遍历）
+var invertTree = function(root) {
+    // debugger
     if (root == null) {
         return null;
     }
-    // 使用unshift与pop模拟队列的效果
+    /**
+     * 使用队列可实现广度优先遍历,
+     * 使用栈可实现深度优先遍历
+     */
     var queue = [];
-    queue.unshift(root);
+    queue.push(root);
     while (queue.length > 0) {
         var curNode = queue.pop();
+        console.log(curNode.val);
+
+        if (curNode.right != null) {
+            queue.push(curNode.right);
+        }
+        if (curNode.left != null) {
+            queue.push(curNode.left);
+        }
+
+ 
         var tmp = curNode.left;
         curNode.left = curNode.right;
         curNode.right = tmp;
-
-        if (curNode.left != null) {
-            queue.unshift(curNode.left);
-        }
-        if (curNode.right != null) {
-            queue.unshift(curNode.right);
-        }
     }
     return root;
 };
+var node = {
+    val: 7,
+    left: {
+        val: 6,
+        left: {
+            val: 5,
+            left: {
+                val: 1,
+                left: null,
+                right: null
+            },
+            right: {
+                val: 2,
+                left: null,
+                right: null
+            }
+        },
+        right: {
+            val: 3,
+            left: null,
+            right: null
+        }
+    },
+    right: {
+        val: 9,
+        left: {
+            val: 7,
+            left: {
+                val: 10,
+                left: null,
+                right: null
+            },
+            right: null
+        },
+        right: {
+            val: 4,
+            left: null,
+            right: null
+        }
+    }
+}
+
+var n1 = {
+    val: 7,
+    left: {
+        val: 6,
+        left: {
+            val: 5,
+            left: null,
+            right: null
+        }
+    },
+    right: {
+        val: 9,
+        left: null,
+        right: null
+    }
+}
+
 // var node = {
-//     val: 7,
+//     val: 9,
 //     left: {
-//         val: 6,
+//         val: 4,
 //         left: null,
 //         right: null
 //     },
-//     right: {
-//         val: 9,
-//         left: null,
-//         right: null
-//     }
+//     right: null
 // }
-
-var node = {
-    val: 9,
-    left: {
-        val: 4,
-        left: null,
-        right: null
-    },
-    right: null
-}
 invertTree(node)
