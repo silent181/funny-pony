@@ -12,7 +12,8 @@
         "postpartialCommit": "git push",
         "test": "npm run testSharp && npm run testUtil",
         "testSharp": "mocha ./trivialities/MajorTransformer/sharp.test.js",
-        "testUtil": "mocha ./trivialities/MajorTransformer/utils"
+        "testUtil": "mocha ./trivialities/MajorTransformer/utils",
+        "calc-lyric": "node ./trivialities/calcLyric"
     },
     "devDependencies": {
         "chai": "^4.2.0",
