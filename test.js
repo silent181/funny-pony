@@ -25,79 +25,65 @@ var list = [
     },
 ]
 
-const options = [
-    {
-        key: 'boss',
-        val: 'robin'
-    },
-    {
-        key: 'title',
-        val: 'doctor'
-    },
-    {
-        key: 'salary',
-        val: item => {
-            const { age, salary } = item;
-            return age ? age * 10 + salary : salary;
-        }
-    },
-    {
-        key: 'age',
-        val: 222222,
-        overwritten: false
-    }
-]
-
-function makeAddKeyForList(...args) {
+function makeAddPropForList(...args) {
     const { key, val, overwritten, keyValues } = getArguments(args);
-    // console.log(key);
-    // console.log(val);
-    // console.log(overwritten);
-    console.log(keyValues);
+    const hasMultipleKvs = keyValues.length > 0;
 
-    return (list = []) => {
-        return list.map((item, index, array) => {
-            if (keyValues.length) {
-                const addOnProps = keyValues.reduce(
-                    (props, { key, val, overwritten }) => {
-                        if (canSkipKey(overwritten, item, key)) {
-                            return props;
-                        }
+    return (list = []) => list.map((item, index, array) => {
+        if (hasMultipleKvs) {
+            const addedProps = keyValues.reduce(
+                (props, { key, val, overwritten }) => getNewItem(
+                    item,
+                    key,
+                    val,
+                    overwritten,
+                    index,
+                    array,
+                    props
+                ),
+                {}
+            );
+            return {
+                ...item,
+                ...addedProps
+            };
+        }
 
-                        const value = getValue(val, item, index, array);
-                        return {
-                            ...props,
-                            [key]: value
-                        }
-                    },
-                    {}
-                );
+        return getNewItem(
+            item,
+            key,
+            val,
+            overwritten,
+            index,
+            array,
+        );
+    })
+}
 
-                return {
-                    ...item,
-                    ...addOnProps
-                }
-            } else {
-                if (canSkipKey(overwritten, item, key)) {
-                    return item;
-                }
+// 若props传一个对象，则表示有多条prop，在keyValues.reduce方法里执行
+function getNewItem(
+    item,
+    key,
+    val,
+    overwritten,
+    index,
+    array,
+    props
+) {
+    const canSkipKey = !overwritten && item[key] != null;
+    const isPropsType = isObject(props);
 
-                const value = getValue(val, item, index, array);
-                return {
-                    ...item,
-                    [key]: value
-                }
-            }
-        })
+    if (canSkipKey) {
+        return isPropsType ? props : item;
     }
-}
 
-function canSkipKey(overwritten, item, key) {
-    return !overwritten && item[key] != null
-}
+    const value = isFunction(val) ? val(item, index, array) : val;
+    const ret = isPropsType ? props : item;
 
-function getValue(value, item, index, array) {
-    return isFunction(value) ? value(item, index, array) : value;
+    return {
+        ...ret,
+        [key]: value
+    }
 }
 
 function getArguments(args) {
@@ -126,17 +112,38 @@ function getArguments(args) {
 }
 
 function isFunction(input) {
-    return typeof input === 'function';
+    return input && typeof input === 'function';
 }
 
 function isObject(input) {
-    return Object.prototype.toString.call(input) === '[object, Object]';
+    return Object.prototype.toString.call(input) === '[object Object]';
 }
 
-// var addBoss = makeAddKeyForList('boss', 'robin')
-// var addTitle = makeAddKeyForList('title', 'doctor')
-// var addAge = makeAddKeyForList('age', 1111, false)
-var comprehensiveFunc = makeAddKeyForList(options)
+// var addBoss = makeAddPropForList('boss', 'robin')
+// var addTitle = makeAddPropForList('title', 'doctor')
+// var addAge = makeAddPropForList('age', 1111, false)
+var comprehensiveFunc = makeAddPropForList([
+    {
+        key: 'boss',
+        val: 'robin'
+    },
+    {
+        key: 'title',
+        val: 'doctor'
+    },
+    {
+        key: 'age',
+        val: 222222,
+        overwritten: false
+    },
+    {
+        key: 'salary',
+        val: item => {
+            const { age, salary } = item;
+            return age ? age * 10 + salary : salary;
+        }
+    }
+])
 var res = comprehensiveFunc(list);
 // var res = compose(
 //     addAge,
